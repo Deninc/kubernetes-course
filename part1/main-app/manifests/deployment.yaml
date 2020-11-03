@@ -13,5 +13,5 @@ spec:
         app: main
     spec:
       containers:
-        - name: hashgenerator
+        - name: main-app
           image: thangnv2212/main-app

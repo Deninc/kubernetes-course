@@ -1,5 +1,7 @@
-FROM alpine
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7-alpine3.8
 
-COPY random_string.sh random_string.sh
+WORKDIR /app
 
-CMD ["sh", "random_string.sh"]
+COPY main.py print_string.sh ./
+
+CMD ./print_string.sh & /start.sh
