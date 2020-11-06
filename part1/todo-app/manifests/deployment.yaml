@@ -13,5 +13,5 @@ spec:
         app: todo
     spec:
       containers:
-        - name: hashgenerator
+        - name: todo-app
           image: thangnv2212/todo-app
