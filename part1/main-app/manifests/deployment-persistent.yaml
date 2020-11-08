@@ -14,7 +14,8 @@ spec:
     spec:
       volumes:
       - name: shared-main
-        emptyDir: {}
+        persistentVolumeClaim:
+          claimName: example-claim
       containers:
         - name: main-app-generator
           image: thangnv2212/main-app-generator

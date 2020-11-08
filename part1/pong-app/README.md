@@ -1,5 +1,6 @@
 This project include exercise:
 - 1.09
+- 1.11
 
 ```bash
 docker build -t thangnv2212/pong-app .
