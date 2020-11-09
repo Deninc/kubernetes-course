@@ -4,6 +4,7 @@ This project include exercise:
 - 1.05
 - 1.06
 - 1.08
+- 1.12
 
 ```bash
 docker build -t thangnv2212/todo-app .
