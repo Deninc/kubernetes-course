@@ -2,13 +2,11 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: todo-ingress
-  annotations:
-    traefik.ingress.kubernetes.io/rule-type: "PathPrefixStrip" # /todo point to / in the app
 spec:
   rules:
   - http:
       paths:
-      - path: /todo
+      - path: /
         backend:
           serviceName: todo-svc
           servicePort: 1234
