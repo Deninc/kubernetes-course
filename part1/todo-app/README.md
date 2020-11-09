@@ -13,3 +13,5 @@ kubectl apply -f manifests/deployment.yaml
 kubectl apply -f manifests/service.yaml
 kubectl apply -f manifests/ingress.yaml
 ```
+
+Deployed to localhost:8081, delete main-app ingress before running this.
