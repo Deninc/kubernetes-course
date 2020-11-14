@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pong-ingress
+  annotations:
+    traefik.ingress.kubernetes.io/rule-type: "PathPrefixStrip" # /pingpong point to / in the app
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /pingpong
+        backend:
+          serviceName: pong-svc
+          servicePort: 1234
