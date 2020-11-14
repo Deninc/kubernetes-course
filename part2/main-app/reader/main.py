@@ -1,4 +1,5 @@
 import hashlib
+import urllib.request
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
@@ -8,8 +9,7 @@ app = FastAPI()
 def read_root():
     with open("/tmp/random_string.txt") as f:
         s = f.readline().rstrip()
-    with open("/tmp/pong_count.txt") as f:
-        c = f.readline().rstrip()
+    c = urllib.request.urlopen("http://pong-svc:1234/count").read()
     h = hashlib.sha224(s.encode("utf-8")).hexdigest()
     return f"""
     <html>
