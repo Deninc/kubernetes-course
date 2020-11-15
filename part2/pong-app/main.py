@@ -1,23 +1,24 @@
+import psycopg2
 from fastapi import FastAPI
 
 app = FastAPI()
 
-# many app.counter is handled separately by processes => write to file as cache
-# https://github.com/tiangolo/fastapi/issues/592
-with open("/tmp/pong_count.txt", "w") as f:
-        f.write("0")
+conn = psycopg2.connect(host="pg-svc", dbname="postgres", user="postgres", password="test")
+cur = conn.cursor()
+
+cur.execute("CREATE TABLE IF NOT EXISTS counter (id serial PRIMARY KEY, count integer);")
+cur.execute("INSERT INTO counter(id, count) VALUES (1, 0) ON CONFLICT (id) DO NOTHING;")
 
 @app.get("/")
 def read_root():
-    with open("/tmp/pong_count.txt") as f:
-        c = int(f.readline().rstrip())
+    cur.execute("SELECT count FROM counter WHERE id = 1")
+    c = cur.fetchone()[0]
     c += 1
-    with open("/tmp/pong_count.txt", "w") as f:
-        f.write(str(c))
+    cur.execute(f"UPDATE counter SET count = {c} WHERE id = 1")
     return f"pong {c}"
 
 @app.get("/count")
 def read_count():
-    with open("/tmp/pong_count.txt") as f:
-        c = int(f.readline().rstrip())
+    cur.execute("SELECT count FROM counter WHERE id = 1")
+    c = cur.fetchone()[0]
     return c
