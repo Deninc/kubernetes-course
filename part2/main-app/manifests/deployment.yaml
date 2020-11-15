@@ -27,3 +27,6 @@ spec:
           volumeMounts:
           - name: shared-main
             mountPath: /tmp
+          envFrom:
+          - configMapRef:
+              name: dotenv-file

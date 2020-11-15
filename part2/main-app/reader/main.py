@@ -1,3 +1,4 @@
+import os
 import hashlib
 import urllib.request
 from fastapi import FastAPI
@@ -17,6 +18,7 @@ def read_root():
             <title>Main app</title>
         </head>
         <body>
+            <p>{os.environ["MESSAGE"]}</p>
             <p>{s} {h}</p>
             <p>Ping / Pongs: {c}</p>
         </body>
