@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: pong-ingress
+  namespace: main-ns
   annotations:
     traefik.ingress.kubernetes.io/rule-type: "PathPrefixStrip" # /pingpong point to / in the app
 spec:
