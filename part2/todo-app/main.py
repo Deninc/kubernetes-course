@@ -1,3 +1,4 @@
+import psycopg2
 import urllib.request
 from fastapi import FastAPI, Form, Request, status
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -12,22 +13,22 @@ urllib.request.urlretrieve("https://picsum.photos/400/300", "/app/static/image.j
 
 templates = Jinja2Templates(directory="templates")
 
+conn = psycopg2.connect(host="pg-svc", dbname="postgres", user="postgres", password="test")
+cur = conn.cursor()
+
+cur.execute("CREATE TABLE IF NOT EXISTS todos (id serial PRIMARY KEY, todo varchar);")
 
 # http://localhost/
 @app.get("/todos")
 def read_root(request: Request):
-    try:
-        with open("/tmp/list.txt") as f:
-                todos = f.read().splitlines()
-    except FileNotFoundError:
-        todos = []
+    cur.execute("SELECT todo FROM todos")
+    todos = [x[0] for x in cur.fetchall()]
 
     return templates.TemplateResponse("index.html", {"todos": todos, "request": request})
 
 @app.post("/todos")
 def add(todo: str = Form(...)):
     ### ... means todo param is required
-    with open("/tmp/list.txt", "a") as f:
-        f.write(todo + "\n")
+    cur.execute(f"INSERT INTO todos(todo) VALUES ('{todo}')")
 
     return RedirectResponse("/todos", status_code=status.HTTP_303_SEE_OTHER)
