@@ -30,3 +30,21 @@ spec:
       containers:
         - name: todo-app
           image: thangnv2212/todo-app
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: todo-ingress
+  namespace: todo-ns
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /todos
+        backend:
+          serviceName: todo-svc
+          servicePort: 1234
+      - path: /static
+        backend:
+          serviceName: todo-svc
+          servicePort: 1234

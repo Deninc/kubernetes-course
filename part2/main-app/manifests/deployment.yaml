@@ -44,3 +44,17 @@ spec:
           envFrom:
           - configMapRef:
               name: dotenv-file
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: main-ingress
+  namespace: main-ns
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: main-svc
+          servicePort: 1234
