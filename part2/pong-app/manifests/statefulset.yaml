@@ -34,9 +34,9 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data
-          env:
-            - name: POSTGRES_PASSWORD
-              value: test
+          envFrom:
+          - secretRef:
+              name: postgres-env
   volumeClaimTemplates:
     - metadata:
         name: data

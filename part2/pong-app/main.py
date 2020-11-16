@@ -1,9 +1,10 @@
+import os
 import psycopg2
 from fastapi import FastAPI
 
 app = FastAPI()
 
-conn = psycopg2.connect(host="pg-svc", dbname="postgres", user="postgres", password="test")
+conn = psycopg2.connect(host="pg-svc", dbname="postgres", user="postgres", password=os.environ["POSTGRES_PASSWORD"])
 cur = conn.cursor()
 
 cur.execute("CREATE TABLE IF NOT EXISTS counter (id serial PRIMARY KEY, count integer);")

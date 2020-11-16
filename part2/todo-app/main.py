@@ -1,3 +1,4 @@
+import os
 import psycopg2
 import urllib.request
 from fastapi import FastAPI, Form, Request, status
@@ -13,7 +14,7 @@ urllib.request.urlretrieve("https://picsum.photos/400/300", "/app/static/image.j
 
 templates = Jinja2Templates(directory="templates")
 
-conn = psycopg2.connect(host="pg-svc", dbname="postgres", user="postgres", password="test")
+conn = psycopg2.connect(host="pg-svc", dbname="postgres", user="postgres", password=os.environ["POSTGRES_PASSWORD"])
 cur = conn.cursor()
 
 cur.execute("CREATE TABLE IF NOT EXISTS todos (id serial PRIMARY KEY, todo varchar);")

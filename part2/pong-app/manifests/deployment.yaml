@@ -30,6 +30,9 @@ spec:
       containers:
         - name: pong-app
           image: thangnv2212/pong-app
+          envFrom:
+          - secretRef:
+              name: postgres-env
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
