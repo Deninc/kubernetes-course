@@ -33,6 +33,9 @@ spec:
           envFrom:
           - secretRef:
               name: postgres-env
+          env:
+          - name: WORKERS_PER_CORE
+            value: "0.5"
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
