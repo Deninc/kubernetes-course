@@ -6,3 +6,5 @@ kubectl apply -f manifests/statefulset.yaml
 kubectl apply -f manifests/deployment.yaml
 kubectl apply -f manifests/cronjob.yaml
 ```
+
+Go to localhost:8081/todos

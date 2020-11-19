@@ -13,4 +13,4 @@ kubectl apply -f manifests/service.yaml
 kubectl apply -f manifests/ingress.yaml
 ```
 
-Deployed to localhost:8081
+Go to to localhost:8081

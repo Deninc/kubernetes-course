@@ -12,4 +12,4 @@ kubectl create configmap dotenv-file \
 kubectl apply -f manifests/deployment.yaml
 ```
 
-Deployed to localhost:8081
+Go to localhost:8081
