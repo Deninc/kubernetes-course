@@ -1,10 +1,3 @@
-This project include exercise:
-- 1.01
-- 1.03
-- 1.07
-- 1.10
-- 1.11
-
 ```bash
 # inside folder generator
 docker build -t thangnv2212/main-app-generator .
