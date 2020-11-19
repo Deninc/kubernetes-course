@@ -1,4 +1,5 @@
 import os
+import logging
 import psycopg2
 import urllib.request
 from fastapi import FastAPI, Form, Request, status
@@ -7,6 +8,11 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
+
+gunicorn_logger = logging.getLogger('gunicorn.error')
+logger = logging.getLogger("api")
+logger.handlers = gunicorn_logger.handlers
+logger.setLevel(gunicorn_logger.level)
 
 # http://localhost/static/image.jpg
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -33,8 +39,12 @@ def read_root(request: Request):
 @app.post("/todos")
 def add(todo: str = Form(...)):
     ### ... means todo param is required
-    with conn:
-        with conn.cursor() as cur:
-            cur.execute(f"INSERT INTO todos(todo) VALUES ('{todo}')")
+    if len(todo) <= 140:
+        logger.info(f"Adding todo: {todo}")
+        with conn:
+            with conn.cursor() as cur:
+                cur.execute(f"INSERT INTO todos(todo) VALUES ('{todo}')")
+    else:
+        logger.warn(f"Todo message too long, not added")
 
     return RedirectResponse("/todos", status_code=status.HTTP_303_SEE_OTHER)
