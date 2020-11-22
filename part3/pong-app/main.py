@@ -12,7 +12,7 @@ with conn:
         cur.execute("CREATE TABLE IF NOT EXISTS counter (id serial PRIMARY KEY, count integer);")
         cur.execute("INSERT INTO counter(id, count) VALUES (1, 0) ON CONFLICT (id) DO NOTHING;")
 
-@app.get("/")
+@app.get("/pingpong")
 def read_root():
     with conn:
         with conn.cursor() as cur:

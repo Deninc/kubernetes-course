@@ -4,12 +4,12 @@ metadata:
   name: pong-svc
   namespace: main-ns
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: pong
   ports:
     - protocol: TCP
-      port: 80
+      port: 1234
       targetPort: 80 # app port
 ---
 apiVersion: apps/v1
@@ -36,3 +36,17 @@ spec:
           env:
           - name: WORKERS_PER_CORE
             value: "0.5"
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pong-ingress
+  namespace: main-ns
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /pingpong
+        backend:
+          serviceName: pong-svc
+          servicePort: 1234
