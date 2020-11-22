@@ -1,0 +1,48 @@
+apiVersion: v1 # Includes the Service for lazyness
+kind: Service
+metadata:
+  name: pg-svc
+  namespace: main-ns
+  labels:
+    app: postgres
+spec:
+  clusterIP: None # direct access only
+  selector:
+    app: postgres
+  ports:
+  - port: 5432
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pg-ss
+  namespace: main-ns
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:10
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+          envFrom:
+          - secretRef:
+              name: postgres-env
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: local-path
+        resources:
+          requests:
+            storage: 50Mi
