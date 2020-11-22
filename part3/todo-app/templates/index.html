@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Main app</title>
+    </head>
+    <body>
+        <h1>Todo app</h1>
+        <img src="{{ url_for('static', path='/image.jpg') }}" alt="A Dummy Image">
+        <form action="/todos" method="post">
+            <div>
+                <input id="todo" type="text" name="todo" maxlength="140">
+                <button type="submit">Create TODO</button>
+            </div>
+        </form>
+
+        <ul>
+        {% for todo in todos %}
+            <li>{{ todo }}</li>
+        {% endfor %}
+        </ul>
+
+    </body>
+</html>
