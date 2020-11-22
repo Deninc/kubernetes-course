@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: main-svc
+  namespace: main-ns
+spec:
+  type: ClusterIP
+  selector:
+    app: main
+  ports:
+    - protocol: TCP
+      port: 1234 # cluster internal port
+      targetPort: 80 # app port
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: main-dep
+  namespace: main-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: main
+  template:
+    metadata:
+      labels:
+        app: main
+    spec:
+      volumes:
+      - name: shared-main
+        emptyDir: {}
+      containers:
+        - name: main-app-generator
+          image: thangnv2212/main-app-generator
+          volumeMounts:
+          - name: shared-main
+            mountPath: /tmp
+        - name: main-app-reader
+          image: thangnv2212/main-app-reader
+          volumeMounts:
+          - name: shared-main
+            mountPath: /tmp
+          envFrom:
+          - configMapRef:
+              name: dotenv-file
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: main-ingress
+  namespace: main-ns
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: main-svc
+          servicePort: 1234
