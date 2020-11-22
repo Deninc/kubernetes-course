@@ -4,12 +4,12 @@ metadata:
   name: pong-svc
   namespace: main-ns
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: pong
   ports:
     - protocol: TCP
-      port: 1234 # cluster internal port
+      port: 80
       targetPort: 80 # app port
 ---
 apiVersion: apps/v1
@@ -36,19 +36,3 @@ spec:
           env:
           - name: WORKERS_PER_CORE
             value: "0.5"
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: pong-ingress
-  namespace: main-ns
-  annotations:
-    traefik.ingress.kubernetes.io/rule-type: "PathPrefixStrip" # /pingpong point to / in the app
-spec:
-  rules:
-  - http:
-      paths:
-      - path: /pingpong
-        backend:
-          serviceName: pong-svc
-          servicePort: 1234
