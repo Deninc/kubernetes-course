@@ -1,3 +1,8 @@
+GKE cluster
+```bash
+gcloud container clusters create dwk-cluster --zone=europe-north1-b
+```
+
 Create namespace
 ```bash
 brew install kubectx # helper tool kubens

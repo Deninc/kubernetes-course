@@ -4,12 +4,12 @@ metadata:
   name: todo-svc
   namespace: todo-ns
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: todo
   ports:
     - protocol: TCP
-      port: 1234 # cluster internal port
+      port: 1234
       targetPort: 80 # app port
 ---
 apiVersion: apps/v1
