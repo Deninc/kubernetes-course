@@ -1,6 +1,7 @@
 GKE cluster
 ```bash
 gcloud container clusters create dwk-cluster --zone=europe-north1-b
+gcloud container clusters get-credentials dwk-cluster --zone=europe-north1-b
 ```
 
 Create namespace
