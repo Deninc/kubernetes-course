@@ -27,6 +27,11 @@ with conn:
     with conn.cursor() as cur:
         cur.execute("CREATE TABLE IF NOT EXISTS todos (id serial PRIMARY KEY, todo varchar);")
 
+# Fix GKE Ingress 502 error
+@app.get("/")
+def health():
+    return
+
 @app.get("/todos")
 def read_root(request: Request):
     with conn:

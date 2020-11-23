@@ -12,6 +12,11 @@ with conn:
         cur.execute("CREATE TABLE IF NOT EXISTS counter (id serial PRIMARY KEY, count integer);")
         cur.execute("INSERT INTO counter(id, count) VALUES (1, 0) ON CONFLICT (id) DO NOTHING;")
 
+# Fix GKE Ingress 502 error
+@app.get("/")
+def health():
+    return
+
 @app.get("/pingpong")
 def read_root():
     with conn:
