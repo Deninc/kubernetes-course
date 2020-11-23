@@ -25,6 +25,7 @@ env:
   GKE_ZONE: europe-north1-b
   DEPLOYMENT_NAME: todo-dep
   IMAGE: thangnv2212/todo-app
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true' 
 
 jobs:
   setup-build-publish-deploy:
