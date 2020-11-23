@@ -23,7 +23,7 @@ env:
   GKE_CLUSTER: dwk-cluster
   GKE_ZONE: europe-north1-b
   DEPLOYMENT_NAME: todo-dep
-  IMAGE: thangnv2212/todo-app
+  IMAGE: todo-app
 
 jobs:
   setup-build-publish-deploy:
