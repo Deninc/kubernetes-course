@@ -16,7 +16,11 @@ defaults:
   run:
     working-directory: part3/todo-app
 
-on: delete
+on: 
+  delete:
+    branches:
+      - '*'
+      - '!master'
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}

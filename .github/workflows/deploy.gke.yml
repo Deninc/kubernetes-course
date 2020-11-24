@@ -16,7 +16,11 @@ defaults:
   run:
     working-directory: part3/todo-app
 
-on: push
+on: 
+  push:
+    branches:
+      - '*'
+      - '!master'
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
