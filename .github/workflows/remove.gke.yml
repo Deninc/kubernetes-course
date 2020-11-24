@@ -10,7 +10,7 @@
 #
 # For more support on how to run the workflow, please visit https://github.com/GoogleCloudPlatform/github-actions/tree/master/example-workflows/gke
 
-name: Build and Deploy to GKE
+name: Remove GKE deployment
 
 defaults:
   run:
@@ -62,6 +62,6 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
-        kubectl config set-context --current --namespace=${GITHUB_REF#refs/heads/}
-        ./kustomize edit set namespace ${GITHUB_REF#refs/heads/}
+        kubectl config set-context --current --namespace=${github.event.ref#refs/heads/}
+        ./kustomize edit set namespace ${github.event.ref#refs/heads/}
         kubectl delete -k .
