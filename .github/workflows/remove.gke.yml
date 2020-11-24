@@ -59,9 +59,10 @@ jobs:
         curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
         chmod u+x ./kustomize
 
-    # Deploy the Docker image to the GKE cluster
-    - name: Deploy
+    # Remove
+    - name: Remove
       run: |-
         kubectl config set-context --current --namespace=${{ github.event.ref }}
         ./kustomize edit set namespace ${{ github.event.ref }}
         kubectl delete -k .
+        kubectl delete namespaces ${{ github.event.ref }}
