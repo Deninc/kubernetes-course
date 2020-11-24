@@ -62,6 +62,6 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
-        kubectl config set-context --current --namespace=${github.event.ref#refs/heads/}
-        ./kustomize edit set namespace ${github.event.ref#refs/heads/}
+        kubectl config set-context --current --namespace=${github.event.ref}
+        ./kustomize edit set namespace ${github.event.ref}
         kubectl delete -k .
