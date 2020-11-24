@@ -81,4 +81,4 @@ jobs:
         ./kustomize edit set namespace ${GITHUB_REF#refs/heads/}
         ./kustomize edit set image gcr.io/PROJECT_ID/IMAGE:TAG=gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA
         kubectl apply -k .
-        kubectk get pod
+        kubectl get pod
