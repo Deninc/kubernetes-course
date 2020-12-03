@@ -25,7 +25,9 @@ kubens main-ns
 References:
 
 https://cloud.google.com/blog/products/databases/to-run-or-not-to-run-a-database-on-kubernetes-what-to-consider
-
 https://cloud.google.com/products/calculator#id=3018dbb0-8411-4e48-9dce-9670c31464a3
-
 https://cloud.google.com/products/calculator#id=00a1b006-1856-4c96-b0a1-d002731b898f
+
+### Exercise 3.07: Commitment
+
+I'm using Postgres with PersistentVolumeClaims for this project because I have times for all the hurdles of learning and applying Kubernetes knowledge.
