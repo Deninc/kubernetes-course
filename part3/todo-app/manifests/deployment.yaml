@@ -36,6 +36,10 @@ spec:
           env:
           - name: WORKERS_PER_CORE
             value: "0.5"
+          resources:
+            limits:
+              cpu: "200m"
+              memory: "64Mi"
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress

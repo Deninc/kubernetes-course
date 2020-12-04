@@ -36,6 +36,10 @@ spec:
           volumeMounts:
           - name: shared-main
             mountPath: /tmp
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "64Mi"
         - name: main-app-reader
           image: thangnv2212/main-app-reader
           volumeMounts:
@@ -44,6 +48,10 @@ spec:
           envFrom:
           - configMapRef:
               name: dotenv-file
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "64Mi"
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
