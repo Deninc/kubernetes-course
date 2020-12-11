@@ -40,17 +40,3 @@ spec:
             limits:
               cpu: "0.1"
               memory: "64Mi"
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: pong-ingress
-  namespace: main-ns
-spec:
-  rules:
-  - http:
-      paths:
-      - path: /pingpong
-        backend:
-          serviceName: pong-svc
-          servicePort: 1234
