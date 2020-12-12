@@ -42,6 +42,12 @@ spec:
               memory: "64Mi"
         - name: main-app-reader
           image: thangnv2212/main-app-reader
+          readinessProbe:
+            httpGet:
+              path: /rediness
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
           volumeMounts:
           - name: shared-main
             mountPath: /tmp
