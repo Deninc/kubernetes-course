@@ -31,3 +31,10 @@ https://cloud.google.com/products/calculator#id=00a1b006-1856-4c96-b0a1-d002731b
 ### Exercise 3.07: Commitment
 
 I'm using Postgres with PersistentVolumeClaims for this project because I have times for all the hurdles of learning and applying Kubernetes knowledge.
+
+### Exercise 4.03: Prometheus
+
+Query:
+```bash
+count(kube_pod_info{namespace="prometheus", created_by_kind="StatefulSet"})
+```
