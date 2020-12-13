@@ -1,11 +1,13 @@
 import os
 import logging
+import json
 import psycopg2
 import urllib.request
 from fastapi import FastAPI, Form, Request, status, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from pynats import NATSClient
 
 app = FastAPI()
 
@@ -48,6 +50,9 @@ def add(todo: str = Form(...)):
         with conn:
             with conn.cursor() as cur:
                 cur.execute(f"INSERT INTO todos(todo) VALUES ('{todo}')")
+        with NATSClient(os.environ["NATS_URL"]) as client:
+            message = {"msg": todo, "type": "inserted"}
+            client.publish("broadcaster", payload=json.dumps(message))
     else:
         logger.warn(f"Todo message too long, not added")
 
@@ -59,6 +64,9 @@ def add(todo_id: int):
         with conn:
             with conn.cursor() as cur:
                 cur.execute(f"UPDATE todos SET done='t' WHERE id = {todo_id}")
+        with NATSClient(os.environ["NATS_URL"]) as client:
+            message = {"msg": todo_id, "type": "updated"}
+            client.publish("broadcaster", payload=str(message))
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Server error")

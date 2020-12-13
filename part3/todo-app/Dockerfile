@@ -1,7 +1,7 @@
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8-slim
 
 WORKDIR /app
-RUN pip install aiofiles python-multipart jinja2 psycopg2-binary
+RUN pip install aiofiles python-multipart jinja2 psycopg2-binary nats-python
 RUN mkdir static
 
 COPY . .

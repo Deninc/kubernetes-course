@@ -42,6 +42,8 @@ spec:
           env:
           - name: WORKERS_PER_CORE
             value: "0.5"
+          - name: NATS_URL
+            value: nats://my-nats:4222
           resources:
             limits:
               cpu: "200m"
