@@ -36,5 +36,5 @@ I'm using Postgres with PersistentVolumeClaims for this project because I have t
 
 Query:
 ```bash
-count(kube_pod_info{namespace="prometheus", created_by_kind="StatefulSet"})
+scalar(count(kube_pod_info{namespace="prometheus", created_by_kind="StatefulSet"}))
 ```
