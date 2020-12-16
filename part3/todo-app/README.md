@@ -7,7 +7,3 @@ kubectl apply -k
 Go to localhost:8081/todos
 
 ![](todo.png)
-
-### Exercise 3.10
-
-![](todo-log.png)
