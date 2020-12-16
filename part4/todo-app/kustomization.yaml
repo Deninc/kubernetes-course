@@ -4,7 +4,7 @@ resources:
 - manifests/sealedsecret.yaml
 - manifests/statefulset.yaml
 - manifests/analysistemplate.yaml
-- manifests/deployment.yaml
+- manifests/rollout.yaml
 - manifests/ingress.yaml
 - broadcaster/manifests/sealedsecret.yaml
 - broadcaster/manifests/deployment.yaml

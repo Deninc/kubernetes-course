@@ -4,6 +4,21 @@ gcloud container clusters create dwk-cluster --zone=europe-north1-b
 gcloud container clusters get-credentials dwk-cluster --zone=europe-north1-b
 ```
 
+Prometheus
+```
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add stable https://charts.helm.sh/stable
+kubectl create namespace prometheus
+helm install prometheus-community/kube-prometheus-stack --generate-name --namespace prometheus
+kubectl -n prometheus port-forward prometheus-kube-prometheus-stack-1607-prometheus-0 909
+```
+
+NATS
+```
+helm repo add nats https://nats-io.github.io/k8s/helm/charts/
+helm install my-nats nats/nats
+```
+
 Install sealed secrets
 ```bash
 brew install kubeseal
