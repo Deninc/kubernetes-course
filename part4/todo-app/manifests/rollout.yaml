@@ -18,7 +18,7 @@ metadata:
   name: todo-dep
   namespace: todo-ns
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: todo
@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
         - name: todo-app
-          image: thangnv2212/todo-app
+          image: thangnv2212/todo-app:latest
           readinessProbe:
             httpGet:
               path: /rediness

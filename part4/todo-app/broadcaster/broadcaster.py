@@ -19,7 +19,14 @@ async def run(loop):
     await nc.connect(os.environ["NATS_URL"], loop=loop)
 
     async def message_handler(msg):
-        telegram_bot_sendtext(str(json.loads(msg.data)))
+        d = json.loads(msg.data)
+        print("message received:", d)
+        if d["type"] == "inserted":
+            m = f" *Todo task created:* {d['msg']}"
+        else:
+            m = f"*Todo task completed:* {d['msg']}"
+        print("sending message to telegram:", m)
+        telegram_bot_sendtext(m)
 
     await nc.subscribe("broadcaster", "workers", message_handler)
     print("Listening for broadcaster...")

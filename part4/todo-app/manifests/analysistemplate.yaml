@@ -6,7 +6,7 @@ metadata:
 spec:
   metrics:
   - name: restart-rate
-    initialDelay: 1m
+    initialDelay: 10m
     successCondition: result < 0.1
     provider:
       prometheus:

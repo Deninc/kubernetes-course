@@ -10,13 +10,7 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm repo add stable https://charts.helm.sh/stable
 kubectl create namespace prometheus
 helm install prometheus-community/kube-prometheus-stack --generate-name --namespace prometheus
-kubectl -n prometheus port-forward prometheus-kube-prometheus-stack-1607-prometheus-0 909
-```
-
-NATS
-```
-helm repo add nats https://nats-io.github.io/k8s/helm/charts/
-helm install my-nats nats/nats
+kubectl -n prometheus port-forward prometheus-kube-prometheus-stack-1608-prometheus-0 9090
 ```
 
 Install sealed secrets

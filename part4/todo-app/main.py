@@ -35,14 +35,14 @@ def read_root(request: Request):
     try:
         with conn:
             with conn.cursor() as cur:
-                cur.execute("SELECT todo, done FROM todos")
-                todos = [x for x in cur.fetchall()]
+                cur.execute("SELECT todo, id FROM todos WHERE done='f'")
+                todos = cur.fetchall()
         return templates.TemplateResponse("index.html", {"todos": todos, "request": request})
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Server error")
 
-@app.post("/todos")
+@app.post("/todos/add")
 def add(todo: str = Form(...)):
     ### ... means todo param is required
     if len(todo) <= 140:
@@ -58,15 +58,16 @@ def add(todo: str = Form(...)):
 
     return RedirectResponse("/todos", status_code=status.HTTP_303_SEE_OTHER)
 
-@app.put("/todos/{todo_id}")
-def add(todo_id: int):
+@app.post("/todos/update")
+def update(todo_id: int = Form(...)):
     try:
         with conn:
             with conn.cursor() as cur:
-                cur.execute(f"UPDATE todos SET done='t' WHERE id = {todo_id}")
+                cur.execute(f"UPDATE todos SET done='t' WHERE id = {todo_id} RETURNING todo")
+                todo = cur.fetchone()[0]
         with NATSClient(os.environ["NATS_URL"]) as client:
-            message = {"msg": todo_id, "type": "updated"}
-            client.publish("broadcaster", payload=str(message))
+            message = {"msg": todo, "type": "updated"}
+            client.publish("broadcaster", payload=json.dumps(message))
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Server error")
