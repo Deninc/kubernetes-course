@@ -4,3 +4,4 @@ resources:
 - manifests/sealedsecret.yaml
 - manifests/statefulset.yaml
 - manifests/deployment.yaml
+- manifests/ingress.yaml

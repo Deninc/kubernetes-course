@@ -9,7 +9,7 @@ docker build -t thangnv2212/main-app-reader . && docker push thangnv2212/main-ap
 kubectl create configmap dotenv-file \
        --from-env-file=configmap/dotenv.properties
 
-kubectl apply -k
+kubectl apply -k .
 ```
 
 Go to localhost:8081

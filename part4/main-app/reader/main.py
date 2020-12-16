@@ -1,7 +1,7 @@
 import os
 import hashlib
 import urllib.request
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 
 app = FastAPI()
@@ -24,3 +24,13 @@ def read_root():
         </body>
     </html>
     """
+
+# readinessProbe check if pingpong is working
+@app.get("/rediness")
+def rediness():
+    try:
+        urllib.request.urlopen("http://pong-svc:1234/count").read()
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Pingpong server not ready")
+    return

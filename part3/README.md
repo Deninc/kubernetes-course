@@ -12,12 +12,6 @@ kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/downloa
 kubeseal -o yaml < secret.yaml > sealedsecret.yaml
 ```
 
-Install argo-rollouts
-```bash
-kubectl create namespace argo-rollouts
-kubectl apply -n argo-rollouts -f https://raw.githubusercontent.com/argoproj/argo-rollouts/stable/manifests/install.yaml
-```
-
 Create namespace
 ```bash
 brew install kubectx # helper tool kubens
@@ -45,10 +39,3 @@ https://cloud.google.com/products/calculator#id=00a1b006-1856-4c96-b0a1-d002731b
 ### Exercise 3.07: Commitment
 
 I'm using Postgres with PersistentVolumeClaims for this project because I have times for all the hurdles of learning and applying Kubernetes knowledge.
-
-### Exercise 4.03: Prometheus
-
-Query:
-```bash
-scalar(count(kube_pod_info{namespace="prometheus", created_by_kind="StatefulSet"}))
-```

@@ -1,9 +1,21 @@
 import os
 import psycopg2
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 
 app = FastAPI()
-conn = None
+
+conn = psycopg2.connect(host="pg-svc", dbname="postgres", user="postgres", password=os.environ["POSTGRES_PASSWORD"])
+
+# https://www.psycopg.org/docs/usage.html#with-statement
+with conn:
+    with conn.cursor() as cur:
+        cur.execute("CREATE TABLE IF NOT EXISTS counter (id serial PRIMARY KEY, count integer);")
+        cur.execute("INSERT INTO counter(id, count) VALUES (1, 0) ON CONFLICT (id) DO NOTHING;")
+
+# Fix GKE Ingress 502 error
+@app.get("/")
+def health():
+    return
 
 @app.get("/pingpong")
 def read_root():
@@ -22,27 +34,3 @@ def read_count():
             cur.execute("SELECT count FROM counter WHERE id = 1")
             c = cur.fetchone()[0]
     return c
-
-# Fix GKE Ingress 502 error
-@app.get("/")
-def health():
-    return
-
-# readinessProbe check if Postgres is working
-@app.get("/rediness")
-def rediness():
-    global conn
-    try:
-        if not conn:
-            conn = psycopg2.connect(host="pg-svc", dbname="postgres", user="postgres", password=os.environ["POSTGRES_PASSWORD"])
-
-        # https://www.psycopg.org/docs/usage.html#with-statement
-        with conn:
-            with conn.cursor() as cur:
-                cur.execute("CREATE TABLE IF NOT EXISTS counter (id serial PRIMARY KEY, count integer);")
-                cur.execute("INSERT INTO counter(id, count) VALUES (1, 0) ON CONFLICT (id) DO NOTHING;")
-    except Exception as e:
-        print(e)
-        conn = None
-        raise HTTPException(status_code=500, detail="Postgres server not ready")
-    return

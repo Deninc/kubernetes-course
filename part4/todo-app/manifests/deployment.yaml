@@ -12,16 +12,23 @@ spec:
       port: 1234
       targetPort: 80 # app port
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: todo-dep
   namespace: todo-ns
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: todo
+  strategy:
+    canary:
+      steps:
+      - setWeight: 50
+      - analysis:
+          templates:
+          - templateName: restart-rate
   template:
     metadata:
       labels:
@@ -30,27 +37,21 @@ spec:
       containers:
         - name: todo-app
           image: thangnv2212/todo-app
+          readinessProbe:
+            httpGet:
+              path: /rediness
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
           envFrom:
           - secretRef:
               name: postgres-env
           env:
           - name: WORKERS_PER_CORE
             value: "0.5"
+          - name: NATS_URL
+            value: nats://my-nats:4222
           resources:
             limits:
               cpu: "200m"
               memory: "64Mi"
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: todo-ingress
-  namespace: todo-ns
-spec:
-  rules:
-  - http:
-      paths:
-      - path: /*
-        backend:
-          serviceName: todo-svc
-          servicePort: 1234

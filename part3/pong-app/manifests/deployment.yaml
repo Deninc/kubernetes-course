@@ -30,12 +30,6 @@ spec:
       containers:
         - name: pong-app
           image: thangnv2212/pong-app
-          readinessProbe:
-            httpGet:
-              path: /rediness
-              port: 80
-            initialDelaySeconds: 5
-            periodSeconds: 10
           envFrom:
           - secretRef:
               name: postgres-env

@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: todo-svc
-  namespace: todo-ns
+  name: pong-svc
+  namespace: main-ns
 spec:
   type: NodePort
   selector:
-    app: todo
+    app: pong
   ports:
     - protocol: TCP
       port: 1234
@@ -15,21 +15,27 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-dep
-  namespace: todo-ns
+  name: pong-dep
+  namespace: main-ns
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: todo
+      app: pong
   template:
     metadata:
       labels:
-        app: todo
+        app: pong
     spec:
       containers:
-        - name: todo-app
-          image: thangnv2212/todo-app
+        - name: pong-app
+          image: thangnv2212/pong-app
+          readinessProbe:
+            httpGet:
+              path: /rediness
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
           envFrom:
           - secretRef:
               name: postgres-env
@@ -38,19 +44,5 @@ spec:
             value: "0.5"
           resources:
             limits:
-              cpu: "200m"
+              cpu: "0.1"
               memory: "64Mi"
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: todo-ingress
-  namespace: todo-ns
-spec:
-  rules:
-  - http:
-      paths:
-      - path: /*
-        backend:
-          serviceName: todo-svc
-          servicePort: 1234
