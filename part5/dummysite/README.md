@@ -1,6 +1,4 @@
 ```bash
-k3d cluster create --agents 2
-
 docker build -t thangnv2212/dummysite-controller controller && docker push thangnv2212/dummysite-controller
 
 kubectl apply -k .

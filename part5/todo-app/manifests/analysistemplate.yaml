@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: restart-rate
+  namespace: todo-ns
+spec:
+  metrics:
+  - name: restart-rate
+    initialDelay: 10m
+    successCondition: result < 0.1
+    provider:
+      prometheus:
+        address: http://kube-prometheus-stack-1607-prometheus.prometheus.svc.cluster.local:9090
+        query: |
+          scalar(
+            namespace:container_cpu_usage_seconds_total:sum_rate{namespace="todo-ns"} -
+            namespace:container_cpu_usage_seconds_total:sum_rate{namespace="todo-ns"} offset 10m
+          )

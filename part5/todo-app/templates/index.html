@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>Main app</title>
+    </head>
+    <body>
+        <h1>Todo app</h1>
+        <img src="{{ url_for('static', path='/image.jpg') }}" alt="A Dummy Image">
+        <h3>Create a new todo</h3>
+        <form action="/todos/add" method="post">
+            <div>
+                <input name="todo" type="text" maxlength="140">
+                <button type="submit" class="btn">create!</button>
+            </div>
+        </form>
+
+
+        <ul>
+        {% for todo in todos %}
+            <li>{{ todo[0] }} <form action="/todos/update" method="post"><input name="todo_id" type="hidden" value={{ todo[1] }}><button type="submit" class="btn"><i class="fa fa-close"></i></button></form></li>
+        {% endfor %}
+        </ul>
+
+    </body>
+</html>
