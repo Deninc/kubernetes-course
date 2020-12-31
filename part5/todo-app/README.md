@@ -8,7 +8,7 @@ helm install my-nats nats/nats --namespace todo-ns
 docker build -t thangnv2212/todo-app . && docker push thangnv2212/todo-app
 docker build -t thangnv2212/todo-broadcaster broadcaster && docker push thangnv2212/todo-broadcaster
 
-kubectl apply -k .
+linkerd inject manifests | kubectl apply -f -
 ```
 
 Go to localhost:8081/todos
