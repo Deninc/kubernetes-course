@@ -22,3 +22,8 @@ brew install kubectx # helper tool kubens
 kubectl create namespace todo-ns
 kubens todo-ns
 ```
+
+### Exercise 5.03: Learn from external material
+
+![""](flagger.png)
+*Flagger automated canary releases*
