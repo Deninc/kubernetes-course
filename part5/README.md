@@ -3,11 +3,6 @@ Create cluster
 k3d cluster create --port '8082:30080@agent[0]' -p 8081:80@loadbalancer --agents 2 --k3s-server-arg '--no-deploy=traefik'
 ```
 
-Install linkerd control plane resources
-```bash
-linkerd install | kubectl apply -f -
-```
-
 Install sealed secrets
 ```bash
 brew install kubeseal
@@ -19,6 +14,7 @@ kubeseal -o yaml < secret.yaml > sealedsecret.yaml
 Create namespace
 ```bash
 brew install kubectx # helper tool kubens
+kubectl create namespace main-ns
 kubectl create namespace todo-ns
 kubens todo-ns
 ```

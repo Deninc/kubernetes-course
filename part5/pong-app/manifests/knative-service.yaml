@@ -2,6 +2,7 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: pong
+  namespace: main-ns
 spec:
   template:
     metadata:
@@ -9,3 +10,16 @@ spec:
     spec:
       containers:
         - image: thangnv2212/pong-app
+          readinessProbe:
+            httpGet:
+              path: /rediness
+          envFrom:
+          - secretRef:
+              name: postgres-env
+          env:
+          - name: WORKERS_PER_CORE
+            value: "0.5"
+          resources:
+            limits:
+              cpu: "0.1"
+              memory: "64Mi"

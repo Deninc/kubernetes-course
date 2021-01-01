@@ -4,6 +4,11 @@ helm repo add nats https://nats-io.github.io/k8s/helm/charts/
 helm install my-nats nats/nats --namespace todo-ns
 ```
 
+Install linkerd control plane resources
+```bash
+linkerd install | kubectl apply -f -
+```
+
 ```bash
 docker build -t thangnv2212/todo-app . && docker push thangnv2212/todo-app
 docker build -t thangnv2212/todo-broadcaster broadcaster && docker push thangnv2212/todo-broadcaster

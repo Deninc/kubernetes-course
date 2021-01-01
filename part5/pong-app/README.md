@@ -1,5 +1,6 @@
 ### Exercise 5.05: Deploy to Serverless
 
+Install knative
 https://knative.dev/docs/install/any-kubernetes-cluster/
 
 ```bash
@@ -9,5 +10,5 @@ kubectl apply -k .
 ```
 
 ```
-curl -H "Host: pong.default.example.com " http://localhost:8081
+curl -H "Host: pong.main-ns.example.com" http://localhost:8081
 ```

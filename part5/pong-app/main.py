@@ -5,7 +5,7 @@ from fastapi import FastAPI, HTTPException
 app = FastAPI()
 conn = None
 
-@app.get("/pingpong")
+@app.get("/")
 def read_root():
     with conn:
         with conn.cursor() as cur:
@@ -22,11 +22,6 @@ def read_count():
             cur.execute("SELECT count FROM counter WHERE id = 1")
             c = cur.fetchone()[0]
     return c
-
-# Fix GKE Ingress 502 error
-@app.get("/")
-def health():
-    return
 
 # readinessProbe check if Postgres is working
 @app.get("/rediness")
