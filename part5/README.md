@@ -27,3 +27,14 @@ kubens todo-ns
 
 ![""](flagger.png)
 *Flagger automated canary releases*
+
+### Exercise 5.04: Platform comparison
+
+Comparing OpenShift vs Rancher, I'd choose Rancher because:
+- Rancher use vanilla Kubernetes -> no vendor lock-in
+- Rancher's tools are open-sourced -> +1 moral point
+- Enterprise support is cheaper
+
+References:
+https://www.kloia.com/blog/openshift-vs-rancher
+https://ubuntu.com/kubernetes/compare
