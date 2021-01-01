@@ -1,0 +1,11 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: pong
+spec:
+  template:
+    metadata:
+      name: pong-v1
+    spec:
+      containers:
+        - image: thangnv2212/pong-app

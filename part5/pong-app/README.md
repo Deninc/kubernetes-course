@@ -1,7 +1,13 @@
+### Exercise 5.05: Deploy to Serverless
+
+https://knative.dev/docs/install/any-kubernetes-cluster/
+
 ```bash
 docker build -t thangnv2212/pong-app . && docker push thangnv2212/pong-app
 
 kubectl apply -k .
 ```
 
-Go to localhost:8081/pingpong
+```
+curl -H "Host: pong.default.example.com " http://localhost:8081
+```
