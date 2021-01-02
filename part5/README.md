@@ -29,6 +29,7 @@ kubens todo-ns
 Comparing OpenShift vs Rancher, I'd choose Rancher because:
 - Rancher use vanilla Kubernetes -> no vendor lock-in
 - Rancher's tools are open-sourced -> +1 moral point
+- It is easier to setup
 - Enterprise support is cheaper
 
 References:
@@ -53,7 +54,7 @@ https://ubuntu.com/kubernetes/compare
     - Messaging/Streaming: NATS
     - Serverless: Knative
 
-- Dependencies tools:
+- Dependencies tools (in orange):
     - Distributed services coordination: etcd (for Kubernetes), Zookeeper (for Hadoop, Kafka)
     - Columnar data format: Avro (for Hadoop, Kafka)
     - Service proxy: Knative need Contour (Kubernetes ingress), which using Envoy (proxy). k3s use Traefik Proxy under the hood for ingress
